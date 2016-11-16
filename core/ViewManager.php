@@ -77,10 +77,11 @@ class ViewManager {
   
   
   private function __construct() {
+    /*
     if (session_status() == PHP_SESSION_NONE) {      
       session_start();
     }
-    ob_start();
+    ob_start();*/
   }
   
   /// BUFFER MANAGEMENT

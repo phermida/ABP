@@ -46,7 +46,7 @@ class Ejercicio {
     return $this->id;
   }
   
-  public function getDescripicion() {
+  public function getDescripcion() {
     return $this->descripcion;
   }
 
@@ -100,7 +100,7 @@ class Ejercicio {
   public function checkIsValidForCreate() {
       $errors = array();
       
-      if (strlen(trim($this->descripcion)) < 6 ) {
+      if (strlen(trim($this->descripcion)) < 1 ) {
 	$errors["descripcion"] = "content is mandatory";	
       }
 

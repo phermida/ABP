@@ -21,7 +21,7 @@
     	<div>
     		<?php echo $ejercicio->getNombre() ?>
     		<br/>
-    		<?php echo $ejercicio->getDescripicion() ?>
+    		<?php echo $ejercicio->getDescripcion() ?>
         <br/>
         <?php echo $ejercicio->getFoto() ?>
         <br/>

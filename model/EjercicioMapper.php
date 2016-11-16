@@ -80,7 +80,7 @@ class EjercicioMapper {
   public function save(Ejercicio $ejercicio) {
 
     $stmt = $this->db->prepare("INSERT INTO ejercicios(descripcion, foto, video, nombre, tipo) values (?,?,?,?,?)");
-    $stmt->execute(array($ejercicio->getDescripcion(), $ejercicio->getFoto(), $ejercicio->getNombre(), $ejercicio->getTipo() ));
+    $stmt->execute(array($ejercicio->getDescripcion(), $ejercicio->getFoto(),$ejercicio->getVideo(), $ejercicio->getNombre(), $ejercicio->getTipo() ));
     return $this->db->lastInsertId();
   }
 

@@ -61,6 +61,10 @@ class EjerciciosController extends BaseController {
       // populate the Post object with data form the form
       $ejercicio->setNombre($_POST["nombre"]);
       $ejercicio->setDescripcion($_POST["descripcion"]);
+      $ejercicio->setFoto($_POST["foto"]);
+      $ejercicio->setVideo($_POST["video"]);
+      $ejercicio->setTipo($_POST["tipo"]);
+
       
       // The user of the Post is the currentUser (user in session)
       //---------------------------$post->setAuthor($this->currentUser);
@@ -70,7 +74,7 @@ class EjerciciosController extends BaseController {
   $ejercicio->checkIsValidForCreate(); // if it fails, ValidationException
   
   // save the Post object into the database
-  $this->ejercicioMapper->save($ejercicio);
+  $this->EjercicioMapper->save($ejercicio);
   
   // POST-REDIRECT-GET
   // Everything OK, we will redirect the user to the list of posts
@@ -96,7 +100,7 @@ class EjerciciosController extends BaseController {
     $this->view->setVariable("ejercicio", $ejercicio);    
     
     // render the view (/view/posts/add.php)
-    $this->view->render("ejercicios", "add");
+    $this->view->render("ejercicios", "index");
     
   }
 

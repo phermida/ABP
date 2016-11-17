@@ -191,7 +191,7 @@ ALTER TABLE `actividad_eventual`
 --
 -- Indices de la tabla `ejercicio`
 --
-ALTER TABLE `ejercicio`
+ALTER TABLE `ejercicios`
   ADD PRIMARY KEY (`idEjercicio`);
 
 --
@@ -256,7 +256,7 @@ ALTER TABLE `actividad`
 --
 -- AUTO_INCREMENT de la tabla `ejercicio`
 --
-ALTER TABLE `ejercicio`
+ALTER TABLE `ejercicios`
   MODIFY `idEjercicio` int(255) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `tabla`
@@ -327,7 +327,7 @@ ALTER TABLE `tabla_deportistatdu`
 -- Filtros para la tabla `tabla_ejercicio`
 --
 ALTER TABLE `tabla_ejercicio`
-  ADD CONSTRAINT `tabla_ejercicio_ibfk_1` FOREIGN KEY (`idEjercicio`) REFERENCES `ejercicio` (`idEjercicio`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tabla_ejercicio_ibfk_1` FOREIGN KEY (`idEjercicio`) REFERENCES `ejercicios` (`idEjercicio`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tabla_ejercicio_ibfk_2` FOREIGN KEY (`idTabla`) REFERENCES `tabla` (`idTabla`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

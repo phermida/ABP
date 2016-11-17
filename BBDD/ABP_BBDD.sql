@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-11-2016 a las 12:45:41
+-- Tiempo de generación: 17-11-2016 a las 16:41:22
 -- Versión del servidor: 10.1.19-MariaDB
 -- Versión de PHP: 7.0.9
 
@@ -37,6 +37,30 @@ CREATE TABLE `actividad` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `actividad_anual`
+--
+
+CREATE TABLE `actividad_anual` (
+  `idActividad` int(255) NOT NULL,
+  `fechaInicio` date NOT NULL,
+  `fechaFin` date NOT NULL,
+  `diaSemana` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `actividad_eventual`
+--
+
+CREATE TABLE `actividad_eventual` (
+  `idActividad` int(255) NOT NULL,
+  `fechaRealizacion` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `ejercicio`
 --
 
@@ -47,6 +71,30 @@ CREATE TABLE `ejercicio` (
   `fotoEjercicio` varchar(500) NOT NULL,
   `videoEjercicio` varchar(500) NOT NULL,
   `tipoEjercicio` enum('M','E','C','') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `participacion`
+--
+
+CREATE TABLE `participacion` (
+  `idUsuario` int(255) NOT NULL,
+  `idActividad` int(255) NOT NULL,
+  `fechaParticipacion` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `sesion`
+--
+
+CREATE TABLE `sesion` (
+  `idUsuario` int(255) NOT NULL,
+  `idTabla` int(255) NOT NULL,
+  `fechaSesion` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -127,10 +175,38 @@ ALTER TABLE `actividad`
   ADD KEY `idEntrenador` (`idEntrenador`);
 
 --
+-- Indices de la tabla `actividad_anual`
+--
+ALTER TABLE `actividad_anual`
+  ADD PRIMARY KEY (`idActividad`),
+  ADD KEY `idActividad` (`idActividad`);
+
+--
+-- Indices de la tabla `actividad_eventual`
+--
+ALTER TABLE `actividad_eventual`
+  ADD PRIMARY KEY (`idActividad`),
+  ADD KEY `idActividad` (`idActividad`);
+
+--
 -- Indices de la tabla `ejercicio`
 --
 ALTER TABLE `ejercicio`
   ADD PRIMARY KEY (`idEjercicio`);
+
+--
+-- Indices de la tabla `participacion`
+--
+ALTER TABLE `participacion`
+  ADD KEY `idActividad` (`idActividad`),
+  ADD KEY `idUsuario` (`idUsuario`);
+
+--
+-- Indices de la tabla `sesion`
+--
+ALTER TABLE `sesion`
+  ADD KEY `idTabla` (`idTabla`),
+  ADD KEY `idUsuario` (`idUsuario`);
 
 --
 -- Indices de la tabla `tabla`
@@ -201,6 +277,32 @@ ALTER TABLE `usuario`
 --
 ALTER TABLE `actividad`
   ADD CONSTRAINT `actividad_ibfk_1` FOREIGN KEY (`idEntrenador`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `actividad_anual`
+--
+ALTER TABLE `actividad_anual`
+  ADD CONSTRAINT `actividad_anual_ibfk_1` FOREIGN KEY (`idActividad`) REFERENCES `actividad` (`idActividad`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `actividad_eventual`
+--
+ALTER TABLE `actividad_eventual`
+  ADD CONSTRAINT `actividad_eventual_ibfk_1` FOREIGN KEY (`idActividad`) REFERENCES `actividad` (`idActividad`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `participacion`
+--
+ALTER TABLE `participacion`
+  ADD CONSTRAINT `participacion_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `participacion_ibfk_2` FOREIGN KEY (`idActividad`) REFERENCES `actividad` (`idActividad`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `sesion`
+--
+ALTER TABLE `sesion`
+  ADD CONSTRAINT `sesion_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `sesion_ibfk_2` FOREIGN KEY (`idTabla`) REFERENCES `tabla` (`idTabla`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tabla`

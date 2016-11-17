@@ -64,7 +64,7 @@ CREATE TABLE `actividad_eventual` (
 -- Estructura de tabla para la tabla `ejercicio`
 --
 
-CREATE TABLE `ejercicio` (
+CREATE TABLE `ejercicios` (
   `idEjercicio` int(255) NOT NULL,
   `nombreEjercicio` varchar(50) NOT NULL,
   `descripcionEjercicio` varchar(500) NOT NULL,

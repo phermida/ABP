@@ -1,4 +1,3 @@
-
 <?php
 //file: controller/Ejercicio_Controller.php
 
@@ -81,7 +80,8 @@ class EjerciciosController extends BaseController {
   // We want to see a message after redirection, so we establish
   // a "flash" message (which is simply a Session variable) to be
   // get in the view after redirection.
-  $this->view->setFlash(sprintf(i18n("Exercise \"%s\" successfully added."),$ejercicio ->getNombre()));
+ 
+ //$this->view->setFlash(sprintf(i18n("Exercise \"%s\" successfully added."),$ejercicio ->getNombre()));
   
   // perform the redirection. More or less: 
   // header("Location: index.php?controller=posts&action=index")
@@ -100,11 +100,13 @@ class EjerciciosController extends BaseController {
     $this->view->setVariable("ejercicio", $ejercicio);    
     
     // render the view (/view/posts/add.php)
-    $this->view->render("ejercicios", "index");
+    $this->view->render("ejercicios", "add");
     
   }
 
   public function edit() {
+
+
     /*
     if (!isset($_REQUEST["id"])) {
       throw new Exception("A post id is mandatory");
@@ -117,7 +119,7 @@ class EjerciciosController extends BaseController {
     
     // Get the Post object from the database
     $ejercicioid = $_REQUEST["id"];
-    $ejercicio = $this->ejercicioMapper->findById($ejercicioid);
+    $ejercicio = $this->EjercicioMapper->findById($ejercicioid);
     
     // Does the post exist?
     if ($ejercicio == NULL) {
@@ -131,43 +133,100 @@ class EjerciciosController extends BaseController {
     
     if (isset($_POST["submit"])) { // reaching via HTTP Post...  
     
-      // populate the Post object with data form the form
-      $ejercicio->setNombre($_POST["nombre"]);
-      $ejercicio->setDescripcion($_POST["descripcion"]);
-      
-      try {
-  // validate Post object
-  $ejercicio->checkIsValidForUpdate(); // if it fails, ValidationException
-  
-  // update the Post object in the database
-  $this->ejercicioMapper->update($ejercicio);
-  
-  // POST-REDIRECT-GET
-  // Everything OK, we will redirect the user to the list of posts
-  // We want to see a message after redirection, so we establish
-  // a "flash" message (which is simply a Session variable) to be
-  // get in the view after redirection.
-  $this->view->setFlash(sprintf(i18n("Exercise \"%s\" successfully updated."),$ejercicio ->getNombre()));
-  
-  // perform the redirection. More or less: 
-  // header("Location: index.php?controller=posts&action=index")
-  // die();
-  $this->view->redirect("ejercicios", "index");  
-  
-      }catch(ValidationException $ex) {
-  // Get the errors array inside the exepction...
-  $errors = $ex->getErrors();
-  // And put it to the view as "errors" variable
-  $this->view->setVariable("errors", $errors);
-      }
+            // populate the Post object with data form the form
+            $ejercicio->setNombre($_POST["nombre"]);
+            $ejercicio->setDescripcion($_POST["descripcion"]);
+            $ejercicio->setFoto($_POST["foto"]);
+            $ejercicio->setVideo($_POST["video"]);
+            $ejercicio->setTipo($_POST["tipo"]);
+            
+            try {
+        // validate Post object
+        $ejercicio->checkIsValidForUpdate(); // if it fails, ValidationException
+        
+        // update the Post object in the database
+        $this->EjercicioMapper->update($ejercicio);
+        
+        // POST-REDIRECT-GET
+        // Everything OK, we will redirect the user to the list of posts
+        // We want to see a message after redirection, so we establish
+        // a "flash" message (which is simply a Session variable) to be
+        // get in the view after redirection.
+
+        //$this->view->setFlash(sprintf(i18n("Exercise \"%s\" successfully updated."),$ejercicio ->getNombre()));
+        
+        // perform the redirection. More or less: 
+        // header("Location: index.php?controller=posts&action=index")
+        // die();
+
+        //var_dump(isset($this->view->redirect));
+        //exit;
+        $this->view->redirect("ejercicios", "index");  
+
+        //exit;
+        //header("Location: http://localhost:8888/gimnasio/index.php?controller=ejercicios&action=index");
+
+        
+            }catch(ValidationException $ex) {
+        // Get the errors array inside the exepction...
+        $errors = $ex->getErrors();
+        // And put it to the view as "errors" variable
+        $this->view->setVariable("errors", $errors);
+            }
     }
     
+
+
     // Put the Post object visible to the view
     $this->view->setVariable("ejercicio", $ejercicio);
     
     // render the view (/view/posts/add.php)
     $this->view->render("ejercicios", "edit");    
   }
+
+
+  public function delete() {
+  /*  
+    if (!isset($_POST["id"])) {
+      throw new Exception("id is mandatory");
+    }
+    if (!isset($this->currentUser)) {
+      throw new Exception("Not in session. Editing posts requires login");
+    }*/
+    
+     // Get the Post object from the database
+    $ejercicioid = $_REQUEST["id"];
+    $ejercicio = $this->EjercicioMapper->findById($ejercicioid);
+    
+    // Does the post exist?
+
+    /*if ($ejercicio == NULL) {
+      throw new Exception("no such post with id: ".$ejercicioid);
+    }  
+
+    /*
+    // Check if the Post author is the currentUser (in Session)
+    if ($post->getAuthor() != $this->currentUser) {
+      throw new Exception("Post author is not the logged user");
+    }*/
+    
+    // Delete the Post object from the database
+    $this->EjercicioMapper->delete($ejercicio);
+    
+    // POST-REDIRECT-GET
+    // Everything OK, we will redirect the user to the list of posts
+    // We want to see a message after redirection, so we establish
+    // a "flash" message (which is simply a Session variable) to be
+    // get in the view after redirection.
+
+    //$this->view->setFlash(sprintf(i18n("Exercise \"%s\" successfully deleted."),$ejercicio ->getNombre()));
+    
+    // perform the redirection. More or less: 
+    // header("Location: index.php?controller=posts&action=index")
+    // die();
+    $this->view->redirect("ejercicios", "index");
+    
+  }  
 
 
 

@@ -9,7 +9,7 @@
  $view->setVariable("title", "Edit Exercise");
 
 ?>
-<h1><?= i18n("Create Exercise")?></h1>
+<h1><?= i18n("Alta Ejercicio")?></h1>
 
       <form action="index.php?controller=ejercicios&amp;action=add" method="POST">
 
@@ -42,5 +42,5 @@
 	    <textarea name="descripcion" rows="4" cols="50"></textarea>
 	    <?= isset($errors["descripcion"])?$errors["descripcion"]:"" ?><br>
 
-	    <input type="submit" name="submit" value="submit">
+	    <input type="submit" name="submit" value="Añadir Ejercicio">
       </form>

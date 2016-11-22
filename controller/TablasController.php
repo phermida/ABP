@@ -1,8 +1,7 @@
 <?php
-//file: controller/Ejercicio_Controller.php
-
-require_once(__DIR__."/../model/Ejercicio.php");
-require_once(__DIR__."/../model/EjercicioMapper.php");
+//file: controller/TablasController.php
+require_once(__DIR__."/../model/Tabla.php");
+require_once(__DIR__."/../model/TablaMapper.php");
 require_once(__DIR__."/../model/Usuario.php");
 
 require_once(__DIR__."/../core/ViewManager.php");
@@ -15,7 +14,7 @@ require_once(__DIR__."/../controller/BaseController.php");
  *
  * @author MO
  */
-class EjerciciosController extends BaseController {
+class TablasController extends BaseController {
 
   /**
    * Reference to the EjercicioMapper to interact
@@ -23,12 +22,12 @@ class EjerciciosController extends BaseController {
    *
    * @var PostMapper
    */
-  private $EjercicioMapper;
+  private $TablaMapper;
 
   public function __construct() {
     parent::__construct();
 
-    $this->EjercicioMapper = new EjercicioMapper();
+    $this->TablaMapper = new TablaMapper();
   }
 
 
@@ -37,13 +36,13 @@ class EjerciciosController extends BaseController {
   public function index() {
 
     // obtain the data from the database
-    $ejercicios = $this->EjercicioMapper->findAll();
+    $tablas = $this->TablaMapper->findAll();
 
     // put the array containing Post object to the view
-    $this->view->setVariable("ejercicios", $ejercicios);
+    $this->view->setVariable("tablas", $tablas);
 
     // render the view (/view/posts/index.php)
-    $this->view->render("ejercicios", "index");
+    $this->view->render("tablas", "index");
   }
 
 
@@ -53,16 +52,12 @@ class EjerciciosController extends BaseController {
       throw new Exception("Not in session. Adding posts requires login");
     }*/
 
-    $ejercicio = new Ejercicio();
+    $tabla = new Tabla();
 
     if (isset($_POST["submit"])) { // reaching via HTTP Post...
 
       // populate the Post object with data form the form
-      $ejercicio->setNombre($_POST["nombre"]);
-      $ejercicio->setDescripcion($_POST["descripcion"]);
-      $ejercicio->setFoto($_POST["foto"]);
-      $ejercicio->setVideo($_POST["video"]);
-      $ejercicio->setTipo($_POST["tipo"]);
+      $tabla->setNombreTabla($_POST["nombreTabla"]);
 
 
       // The user of the Post is the currentUser (user in session)
@@ -70,10 +65,10 @@ class EjerciciosController extends BaseController {
 
       try {
   // validate Post object
-  $ejercicio->checkIsValidForCreate(); // if it fails, ValidationException
+  $tabla->checkIsValidForCreate(); // if it fails, ValidationException
 
   // save the Post object into the database
-  $this->EjercicioMapper->save($ejercicio);
+  $this->TablaMapper->save($tabla);
 
   // POST-REDIRECT-GET
   // Everything OK, we will redirect the user to the list of posts
@@ -86,7 +81,7 @@ class EjerciciosController extends BaseController {
   // perform the redirection. More or less:
   // header("Location: index.php?controller=posts&action=index")
   // die();
-  $this->view->redirect("ejercicios", "index");
+  $this->view->redirect("tablas", "index");
 
       }catch(ValidationException $ex) {
   // Get the errors array inside the exepction...
@@ -97,13 +92,12 @@ class EjerciciosController extends BaseController {
     }
 
     // Put the Post object visible to the view
-    $this->view->setVariable("ejercicio", $ejercicio);
+    $this->view->setVariable("tabla", $tabla);
 
     // render the view (/view/posts/add.php)
-    $this->view->render("ejercicios", "add");
+    $this->view->render("tablas", "add");
 
   }
-
   public function edit() {
 
     /*
@@ -117,12 +111,12 @@ class EjerciciosController extends BaseController {
 
 
     // Get the Post object from the database
-    $ejercicioid = $_REQUEST["id"];
-    $ejercicio = $this->EjercicioMapper->findById($ejercicioid);
+    $tablaid = $_REQUEST["id"];
+    $tabla = $this->TablaMapper->findById($tablaid);
 
     // Does the post exist?
-    if ($ejercicio == NULL) {
-      throw new Exception("no such ejercicio with id: ".$ejercicioid);
+    if ($tabla == NULL) {
+      throw new Exception("no such tabla with id: ".$tablaid);
     }
     /*
     // Check if the Post author is the currentUser (in Session)
@@ -133,18 +127,14 @@ class EjerciciosController extends BaseController {
     if (isset($_POST["submit"])) { // reaching via HTTP Post...
 
             // populate the Post object with data form the form
-            $ejercicio->setNombre($_POST["nombre"]);
-            $ejercicio->setDescripcion($_POST["descripcion"]);
-            $ejercicio->setFoto($_POST["foto"]);
-            $ejercicio->setVideo($_POST["video"]);
-            //$ejercicio->setTipo($_POST["tipo"]);
+            $tabla->setNombreTabla($_POST["nombreTabla"]);
 
             try {
         // validate Post object
-        $ejercicio->checkIsValidForUpdate(); // if it fails, ValidationException
+        //$tabla->checkIsValidForUpdate(); // if it fails, ValidationException
 
         // update the Post object in the database
-        $this->EjercicioMapper->update($ejercicio);
+        $this->TablaMapper->update($tabla);
 
         // POST-REDIRECT-GET
         // Everything OK, we will redirect the user to the list of posts
@@ -160,7 +150,7 @@ class EjerciciosController extends BaseController {
 
         //var_dump(isset($this->view->redirect));
         //exit;
-        $this->view->redirect("ejercicios", "index");
+        $this->view->redirect("tablas", "index");
 
         //exit;
         //header("Location: http://localhost:8888/gimnasio/index.php?controller=ejercicios&action=index");
@@ -177,10 +167,10 @@ class EjerciciosController extends BaseController {
 
 
     // Put the Post object visible to the view
-    $this->view->setVariable("ejercicio", $ejercicio);
+    $this->view->setVariable("tabla", $tabla);
 
     // render the view (/view/posts/add.php)
-    $this->view->render("ejercicios", "edit");
+    $this->view->render("tablas", "edit");
   }
 
 
@@ -194,8 +184,8 @@ class EjerciciosController extends BaseController {
     }*/
 
      // Get the Post object from the database
-    $ejercicioid = $_REQUEST["id"];
-    $ejercicio = $this->EjercicioMapper->findById($ejercicioid);
+    $tablaid = $_REQUEST["id"];
+    $tabla = $this->TablaMapper->findById($tablaid);
 
     // Does the post exist?
 
@@ -210,7 +200,7 @@ class EjerciciosController extends BaseController {
     }*/
 
     // Delete the Post object from the database
-    $this->EjercicioMapper->delete($ejercicio);
+    $this->TablaMapper->delete($tabla);
 
     // POST-REDIRECT-GET
     // Everything OK, we will redirect the user to the list of posts
@@ -223,7 +213,7 @@ class EjerciciosController extends BaseController {
     // perform the redirection. More or less:
     // header("Location: index.php?controller=posts&action=index")
     // die();
-    $this->view->redirect("ejercicios", "index");
+    $this->view->redirect("tablas", "index");
 
   }
 

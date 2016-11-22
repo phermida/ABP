@@ -16,10 +16,11 @@
   <body>
     <!-- header -->
     <header>
-      <h1>Blog</h1>
+      <h1>MO-GYM</h1>
       <nav id="menu" style="background-color:grey">
 	<ul>
-	<li><a href="index.php?controller=posts&amp;action=index">Posts</a></li>
+	<li><a href="index.php?controller=ejercicios&amp;action=index">Gestion Ejercicios</a></li>
+  <li><a href="index.php?controller=tablas&amp;action=index">Gestión tablas</a></li>
 
 	<?php if (isset($currentuser)): ?>
 	  <li><?= sprintf(i18n("Hello %s"), $currentuser) ?>
@@ -40,11 +41,11 @@
       <?= $view->getFragment(ViewManager::DEFAULT_FRAGMENT) ?>
     </main>
 
-    <footer>
+    <!--<footer>
       <?php
       include(__DIR__."/language_select_element.php");
       ?>
-    </footer>
+    </footer>-->
 
   </body>
 </html>

@@ -20,7 +20,9 @@
       <nav id="menu" style="background-color:grey">
 	<ul>
 	<li><a href="index.php?controller=ejercicios&amp;action=index">Gestion Ejercicios</a></li>
-  <li><a href="index.php?controller=tablas&amp;action=index">Gestión tablas</a></li>
+  <li><a href="index.php?controller=tablas&amp;action=index">Gestión Tablas</a></li>
+  <li><a href="index.php?controller=activities&amp;action=index">Gestión Actividades</a></li>
+  <li><a href="index.php?controller=ActividadesUsuarios&amp;action=index">Gestión Participaciones</a></li>
 
 	<?php if (isset($currentuser)): ?>
 	  <li><?= sprintf(i18n("Hello %s"), $currentuser) ?>

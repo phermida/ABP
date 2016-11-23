@@ -3,7 +3,7 @@
 
 class PDOConnection {
   private static $dbhost = "localhost";
-  private static $dbname = "mvcblog";
+  private static $dbname = "bdayuda";
   private static $dbuser = "test";
   private static $dbpass = "test";
   private static $db_singleton = null;
